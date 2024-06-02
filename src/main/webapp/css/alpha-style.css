@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+nav {
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+nav a {
+    display: inline-block;
+    padding: 1rem;
+    transition: 0.1s ease-in-out;
+}
+
+nav a:hover {
+    background-color: lightgray;
+}
+
+header {
+    text-align: center;
+    margin: 0 auto;
+}
+
+table {
+    margin: 0 auto;
+    border: 1px solid black;
+    border-spacing: 0;
+    text-align: center;
+}
+
+thead th {
+    width: 5rem;
+    padding: 1rem;
+    border-bottom: 1px solid black;
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid black;
+}
+
+tbody tr:last-child td {
+    border: none;
+}
+
+section {
+    text-align: center;
+    margin: 0 auto;
+}
+
+a {
+    text-decoration: none;
+}
