@@ -18,8 +18,8 @@ public class GradeDao {
     public ArrayList<GradeDto> getGradeList() {
 
         String sql = "SELECT GR.GRADE_CODE, GR.GRADE_NAME, COUNT(EM.NO) GRADE_PERSONNEL " +
-                "FROM EMP_이승호 EM, EMP_이승호_GRADE GR " +
-                "WHERE EM.GRADE = GR.GRADE_CODE " +
+                "FROM EMP_이승호 EM " +
+                "RIGHT JOIN EMP_이승호_GRADE GR ON EM.GRADE = GR.GRADE_CODE " +
                 "GROUP BY GR.GRADE_CODE, GR.GRADE_NAME " +
                 "ORDER BY GRADE_PERSONNEL ASC";
 

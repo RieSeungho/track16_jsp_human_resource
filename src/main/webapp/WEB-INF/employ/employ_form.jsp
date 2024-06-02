@@ -21,10 +21,10 @@
 <header>
     <h1>사원등록</h1>
 </header>
-<form action="<c:url value="/employ/form"/>" method="POST">
+<form name="insert_form" action="<c:url value="/employ/form"/>" method="POST">
 <table>
     <tbody>
-        <tr>
+        <tr class="input_space">
             <td>
                 <label for="name">성명</label>
             </td>
@@ -32,7 +32,7 @@
                 <input type="text" name="name" id="name">
             </td>
         </tr>
-        <tr>
+        <tr class="input_space">
             <td>
                 <label for="grade">직위명</label>
             </td>
@@ -44,7 +44,7 @@
                 </select>
             </td>
         </tr>
-        <tr>
+        <tr class="input_space">
             <td>
                 <label for="depart">부서명</label>
             </td>
@@ -56,7 +56,7 @@
                 </select>
             </td>
         </tr>
-        <tr>
+        <tr class="input_space">
             <td>
                 <label for="age">나이</label>
             </td>
@@ -64,16 +64,27 @@
                 <input type="text" id="age" name="age">
             </td>
         </tr>
-    <c:if test="${not empty errorMessage}">
-        <tr>
-            <td colspan="2">${errorMessage}</td>
+        <c:if test="${not empty errorMessage}">
+            <tr class="errorMessage">
+                <td colspan="2" rowspan="2">
+                    <p>등록처리의 오류에 대한 알림</p>
+                    <span>${errorMessage}</span>
+                </td>
+            </tr>
+            <tr>&nbsp;</tr>
+        </c:if>
+        <tr class="anchor_button">
+            <td colspan="2">
+                <a href="javascript:insertEmploy()">등록처리</a>
+            </td>
         </tr>
-    </c:if>
     </tbody>
 </table>
-<section>
-    <button type="submit">등록처리</button>
-</section>
 </form>
+<script>
+    function insertEmploy() {
+        insert_form.submit();
+    }
+</script>
 </body>
 </html>

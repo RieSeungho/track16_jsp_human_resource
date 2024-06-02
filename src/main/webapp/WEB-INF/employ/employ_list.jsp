@@ -33,10 +33,8 @@
     </thead>
     <tbody>
     <c:forEach var="employ" items="${employList}">
-        <tr>
-            <td>
-                <a href="javascript:updateEmploy(${employ.no})">${employ.no}</a>
-            </td>
+        <tr class="selectable">
+            <td>${employ.no}</td>
             <td>${employ.name}</td>
             <td>${employ.grade}</td>
             <td>${employ.depart}</td>
@@ -44,29 +42,50 @@
         </tr>
     </c:forEach>
     <c:if test="${not empty errorMessage}">
-        <tr>
-            <td colspan="5">${errorMessage}</td>
+        <tr class="errorMessage" style="color: red">
+            <td colspan="2" rowspan="2">
+                <p>삭제처리의 오류에 대한 알림</p>
+                <span>${errorMessage}</span>
+            </td>
         </tr>
+        <tr>&nbsp;</tr>
     </c:if>
-    <tr>
+    <tr class="anchor_button">
         <td colspan="5">
             <a href="<c:url value="/employ/form"/>">사원등록</a>
         </td>
     </tr>
-    <tr>
-        <td colspan="5">
+    <tr id="search_row">
+        <th>
             <select name="" id="">
-                <option value="">검색</option>
+                <option value="">사원번호</option>
+                <option value="">성명</option>
+                <option value="">직위</option>
+                <option value="">부서</option>
+                <option value="">나이</option>
             </select>
+        </th>
+        <th colspan="3">
             <input type="text">
+        </th>
+        <th>
             <button>검색</button>
-        </td>
+        </th>
     </tr>
     </tbody>
 </table>
 <script>
 
     const $body = document.querySelector('body');
+
+    const $selectable = document.querySelectorAll('.selectable');
+
+    $selectable.forEach((element) => {
+        element.addEventListener('click', (e) => {
+            const $identfier = e.currentTarget.children[0].textContent;
+            updateEmploy($identfier);
+        })
+    })
 
     function updateEmploy(no) {
         const $form = document.createElement('form');

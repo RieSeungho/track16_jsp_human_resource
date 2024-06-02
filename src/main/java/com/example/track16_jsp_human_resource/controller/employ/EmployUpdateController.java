@@ -30,11 +30,11 @@ public class EmployUpdateController extends HttpServlet {
 
         req.setCharacterEncoding("UTF-8");
 
-        String errorMessage = "수정을 처리하던 중 문제가 발생했습니다. 다시 시도해주세요.";
+        String errorMessage = "수정을 처리하던 중 문제가 발생했습니다. 다시 시도해주세요";
 
         if(req.getParameter("name").isEmpty() || req.getParameter("age").isEmpty()) {
 
-            errorMessage = "사원수정에 필요한 정보를 공백없이 입력해주세요.";
+            errorMessage = "사원수정에 필요한 정보를 공백없이 입력해주세요";
 
             req.setAttribute("employMap", employService.getEmployMap(req.getParameter("no")));
             req.setAttribute("gradeList", employService.getGradeList());
@@ -66,7 +66,7 @@ public class EmployUpdateController extends HttpServlet {
                 integerAge = Integer.parseInt(age.get());
 
                 if(integerAge > 70 || integerAge < 19) {
-                    errorMessage = "사원은 19세부터 70세까지 수정할 수 있습니다.";
+                    errorMessage = "사원은 19세부터 70세까지 수정할 수 있습니다";
 
                     req.setAttribute("errorMessage", errorMessage);
 
@@ -76,7 +76,7 @@ public class EmployUpdateController extends HttpServlet {
 
             } catch (NumberFormatException e) {
 
-                errorMessage = "나이는 3자 이내, 숫자로 입력해주세요.";
+                errorMessage = "나이는 3자 이내, 숫자로 입력해주세요";
 
                 req.setAttribute("errorMessage", errorMessage);
 
@@ -91,7 +91,7 @@ public class EmployUpdateController extends HttpServlet {
                 updateResult = employService.updateEmploy(employDto);
 
             } else {
-                errorMessage = "성명은 6자 이내, 한글로 입력해주세요.";
+                errorMessage = "성명은 6자 이내, 한글로 입력해주세요";
 
                 req.setAttribute("errorMessage", errorMessage);
                 req.getRequestDispatcher("/WEB-INF/employ/employ_update.jsp").forward(req, resp);
@@ -99,7 +99,7 @@ public class EmployUpdateController extends HttpServlet {
             }
 
         } else {
-            errorMessage = "사원수정에 필요한 정보를 공백없이 입력해주세요.";
+            errorMessage = "사원수정에 필요한 정보를 공백없이 입력해주세요";
 
             req.setAttribute("employMap", employService.getEmployMap(no.get()));
             req.setAttribute("gradeList", employService.getGradeList());

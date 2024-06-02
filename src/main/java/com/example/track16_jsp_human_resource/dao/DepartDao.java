@@ -17,8 +17,7 @@ public class DepartDao {
     public ArrayList<DepartDto> getDepartList() {
 
         String sql = "SELECT DE.DEPART_CODE, DE.DEPART_NAME, COUNT(EM.NO) DEPART_PERSONNEL " +
-                "FROM EMP_이승호 EM,  EMP_이승호_DEPART DE " +
-                "WHERE EM.DEPART = DE.DEPART_CODE " +
+                "FROM EMP_이승호 EM RIGHT JOIN EMP_이승호_DEPART DE ON EM.DEPART = DE.DEPART_CODE " +
                 "GROUP BY DE.DEPART_CODE, DE.DEPART_NAME " +
                 "ORDER BY DEPART_PERSONNEL ASC";
 

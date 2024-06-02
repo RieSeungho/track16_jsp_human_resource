@@ -21,18 +21,20 @@
 <header>
     <h1>사원수정</h1>
 </header>
-<form action="<c:url value="/employ/update"/>" method="POST">
+<form name="update_form" action="<c:url value="/employ/update"/>" method="POST">
 <table>
     <tbody>
         <tr>
-            <td>
+            <td colspan="2">
                 <span>사원번호</span>
-            </td>
-            <td>
-                <span>${employMap.no}</span>
             </td>
         </tr>
         <tr>
+            <td colspan="2">
+                <span>${employMap.no}</span>
+            </td>
+        </tr>
+        <tr class="input_space">
             <td>
                 <label for="name">성명</label>
             </td>
@@ -40,7 +42,7 @@
                 <input type="text" name="name" id="name" value="${employMap.name}">
             </td>
         </tr>
-        <tr>
+        <tr class="input_space">
             <td>
                 <label for="grade">직위명</label>
             </td>
@@ -52,7 +54,7 @@
                 </select>
             </td>
         </tr>
-        <tr>
+        <tr class="input_space">
             <td>
                 <label for="depart">부서명</label>
             </td>
@@ -64,7 +66,7 @@
                 </select>
             </td>
         </tr>
-        <tr>
+        <tr class="input_space">
             <td>
                 <label for="age">나이</label>
             </td>
@@ -73,17 +75,21 @@
             </td>
         </tr>
         <c:if test="${not empty errorMessage}">
-            <tr>
-                <td colspan="5">${errorMessage}</td>
+            <tr class="errorMessage" style="color: red">
+                <td colspan="2" rowspan="2">
+                    <p>수정처리의 오류에 대한 알림</p>
+                    <span>${errorMessage}</span>
+                </td>
             </tr>
+            <tr>&nbsp;</tr>
         </c:if>
-        <tr>
-            <td colspan="5">
-                <button type="submit">수정처리</button>
+        <tr class="anchor_button">
+            <td colspan="2">
+                <a href="javascript:updateEmploy()">수정처리</a>
             </td>
         </tr>
-        <tr>
-            <td colspan="5">
+        <tr class="anchor_button">
+            <td colspan="2">
                 <a href="javascript:deleteEmploy('${employMap.no}')">삭제처리</a>
             </td>
         </tr>
@@ -93,6 +99,10 @@
 </form>
 <script>
     const $body = document.querySelector('body');
+
+    function updateEmploy() {
+        update_form.submit()
+    }
 
     function deleteEmploy(no) {
         const $form = document.createElement('form');
