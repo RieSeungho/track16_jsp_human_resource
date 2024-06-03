@@ -1,10 +1,38 @@
+
+function departInsert() {
+    depart_insert.submit();
+}
+
+function departNameUpdate() {
+    depart_name_update.submit();
+}
+
+function departMerge() {
+    depart_merge.submit();
+}
+
+const $body = document.querySelector('body');
+
 const $departDelectable = document.querySelectorAll('.delectable');
 
 $departDelectable.forEach((element) => {
     element.addEventListener('click', (e) => {
         const $identifier = e.currentTarget.children[0].dataset['grade'];
-        console.log($identifier);
 
+        const $departDeleteForm = document.createElement('form');
+        $departDeleteForm.setAttribute('action', '/depart/delete');
+        $departDeleteForm.setAttribute('method', 'POST');
+        $departDeleteForm.setAttribute('name', 'depart_delete');
+
+        const $departHiddenInput = document.createElement('input');
+        $departHiddenInput.setAttribute('name', 'departCode');
+        $departHiddenInput.setAttribute('value', $identifier);
+
+        $departDeleteForm.appendChild($departHiddenInput);
+
+        $body.appendChild($departDeleteForm);
+
+        depart_delete.submit();
     })
 })
 

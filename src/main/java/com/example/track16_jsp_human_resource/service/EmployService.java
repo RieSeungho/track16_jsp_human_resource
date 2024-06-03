@@ -7,6 +7,7 @@ import com.example.track16_jsp_human_resource.dto.DepartDto;
 import com.example.track16_jsp_human_resource.dto.EmployDto;
 import com.example.track16_jsp_human_resource.dto.GradeDto;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
@@ -85,5 +86,36 @@ public class EmployService {
         employDao = new EmployDao();
         int result = employDao.deleteEmploy(no);
         return result;
+    }
+
+    public int saveDepart(String departCode, String departName) {
+
+        departDao = new DepartDao();
+
+        return departDao.saveDepart(departCode, departName);
+    }
+
+    public int updateDepartName(String existCode, String updateName) throws SQLException {
+
+        departDao = new DepartDao();
+
+        return departDao.updateDepartName(existCode, updateName);
+    }
+
+    public int nameDuplication(String updateName) {
+
+        departDao = new DepartDao();
+
+        return departDao.nameDuplication(updateName);
+    }
+
+    public int departPersonnel(String mergeFrom) {
+        departDao = new DepartDao();
+        return departDao.departPersonnel(mergeFrom);
+    }
+
+    public int mergeDepart(String mergeFrom, String mergeTo) {
+        departDao = new DepartDao();
+        return departDao.mergeDepart(mergeFrom, mergeTo);
     }
 }

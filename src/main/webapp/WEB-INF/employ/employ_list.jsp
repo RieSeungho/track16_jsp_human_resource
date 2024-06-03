@@ -17,6 +17,7 @@
     <a href="<c:url value="/employ"/>">사원관리</a>
     <a href="<c:url value="/grade"/>">직급관리</a>
     <a href="<c:url value="/depart"/>">부서관리</a>
+    <a href="https://github.com/RieSeungho/track16_jsp_human_resource">코드확인</a>
 </nav>
 <header>
     <h1>사원관리</h1>
