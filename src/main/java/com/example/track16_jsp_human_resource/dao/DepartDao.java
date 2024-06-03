@@ -218,4 +218,35 @@ public class DepartDao {
 
         return result;
     }
+
+    public int deleteDepart(String departCode) {
+
+        String sql = "DELETE FROM EMP_이승호_DEPART WHERE DEPART_CODE = ?";
+
+        int result = 0;
+
+        JDBConnection jdbc = new JDBConnection();
+
+        try {
+            conn = jdbc.getConnection();
+            conn.setAutoCommit(false);
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, departCode);
+            result = ps.executeUpdate();
+
+            if(result == 1)  {
+                conn.commit();
+            } else {
+                conn.rollback();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
 }

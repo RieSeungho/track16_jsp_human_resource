@@ -118,4 +118,9 @@ public class EmployService {
         departDao = new DepartDao();
         return departDao.mergeDepart(mergeFrom, mergeTo);
     }
+
+    public int deleteDepart(String departCode) {
+        departDao = new DepartDao();
+        return departDao.deleteDepart(departCode);
+    }
 }
