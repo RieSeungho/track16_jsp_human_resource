@@ -27,7 +27,7 @@ public class DepartInsertController extends HttpServlet {
         String errorMessage = "부서기능의 처리에서 오류가 발생했습니다.";
 
         if(req.getParameter("departCode").isEmpty() || req.getParameter("departName").isEmpty()){
-            errorMessage = "등록할 부서의 명칭과 코드를 입력해주세요";
+            errorMessage = "등록할 부서의 코드와 명칭을 입력해주세요";
 
             req.setAttribute("errorMessage", errorMessage);
             req.setAttribute("departList", employService.getDepartList());
@@ -49,6 +49,15 @@ public class DepartInsertController extends HttpServlet {
 
         if(departName.getBytes().length > 20) {
             errorMessage = "등록할 부서의 명칭은 한글 6자, 영문으로 20이하로 입력해주세요";
+
+            req.setAttribute("errorMessage", errorMessage);
+            req.setAttribute("departList", employService.getDepartList());
+            req.getRequestDispatcher("/WEB-INF/depart/depart_manage.jsp").forward(req, resp);
+            return;
+        }
+
+        if(employService.departDuplicationCheck(departCode, departName)) {
+            errorMessage = "부서의 코드 또는 명칭이 중복되었습니다. 다시 시도해주세요";
 
             req.setAttribute("errorMessage", errorMessage);
             req.setAttribute("departList", employService.getDepartList());

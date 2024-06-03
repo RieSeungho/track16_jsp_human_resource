@@ -75,6 +75,11 @@
         </c:if>
         <tr class="anchor_button">
             <td colspan="2">
+                <a href="<c:url value="/employ"/>">초기화면</a>
+            </td>
+        </tr>
+        <tr class="anchor_button">
+            <td colspan="2">
                 <a href="javascript:insertEmploy()">등록처리</a>
             </td>
         </tr>

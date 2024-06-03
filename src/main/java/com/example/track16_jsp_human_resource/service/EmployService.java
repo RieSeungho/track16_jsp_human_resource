@@ -24,6 +24,12 @@ public class EmployService {
         return employDao.getEmployDtos();
     }
 
+    public ArrayList<EmployDto> getEmployDtos(String searchKey, String searchValue) {
+        employDao = new EmployDao();
+
+        return employDao.getEmployDtos(searchKey, searchValue);
+    }
+
     /**
      * 회원가입, 수정시에 사용되는 부서목록으로, GROUP BY 문을 통한 쿼리로 인원을 확인할 수 있음
      * @return
@@ -102,7 +108,20 @@ public class EmployService {
         return departDao.updateDepartName(existCode, updateName);
     }
 
-    public int nameDuplication(String updateName) {
+    public boolean departDuplicationCheck(String departCode, String departName) {
+
+        departDao = new DepartDao();
+
+        boolean result = false;
+
+        if(departDao.codeDuplication(departCode) == 0 || departDao.nameDuplication(departName) == 0) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    public int departNameDuplication(String updateName) {
 
         departDao = new DepartDao();
 
@@ -123,4 +142,56 @@ public class EmployService {
         departDao = new DepartDao();
         return departDao.deleteDepart(departCode);
     }
+
+    public boolean gradeDuplicationCheck(String gradeCode, String gradeName) {
+
+        gradeDao = new GradeDao();
+
+        boolean result = false;
+
+        if(gradeDao.codeDuplication(gradeCode) == 0 || gradeDao.nameDuplication(gradeName) == 0) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    public int saveGrade(String gradeCode, String gradeName) {
+        gradeDao = new GradeDao();
+        return gradeDao.saveGrade(gradeCode, gradeName);
+    }
+
+    public int gradeNameDuplication(String updateName) {
+        gradeDao = new GradeDao();
+        return gradeDao.nameDuplication(updateName);
+    }
+
+    public int updateGradeName(String existCode, String updateName) {
+
+        gradeDao = new GradeDao();
+
+        return gradeDao.updateGradeName(existCode, updateName);
+    }
+
+    public int gradePersonnel(String mergeFrom) {
+
+        gradeDao = new GradeDao();
+
+        return gradeDao.gradePersonnel(mergeFrom);
+    }
+
+    public int mergeGrade(String mergeFrom, String mergeTo) {
+
+        gradeDao = new GradeDao();
+
+        return gradeDao.mergeGrade(mergeFrom, mergeTo);
+    }
+
+    public int deleteGrade(String gradeCode) {
+
+        gradeDao = new GradeDao();
+
+        return gradeDao.deleteGrade(gradeCode);
+    }
+
 }

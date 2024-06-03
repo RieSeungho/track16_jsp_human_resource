@@ -1,12 +1,74 @@
-const $grade = document.querySelectorAll('.delectable');
 
-$grade.forEach((element) => {
+function gradeInsert() {
+    grade_insert.submit();
+}
+
+function gradeNameUpdate() {
+    grade_name_update.submit();
+}
+
+function gradeMerge() {
+    grade_merge.submit();
+}
+
+const $body = document.querySelector('body');
+
+
+const $searchable = document.querySelectorAll('.searchable');
+
+$searchable.forEach((element) => {
     element.addEventListener('click', (e) => {
-        const $identifier = e.currentTarget.children[0].dataset['grade'];
-        console.log($identifier);
 
+        const $direct = e.currentTarget.dataset['direct'];
+
+        const $form = document.createElement('form');
+        $form.setAttribute('action', '/employ');
+        $form.setAttribute('method', 'POST');
+        $form.setAttribute('name', 'depart_direct_search');
+
+        const $searchKeyInput = document.createElement('input');
+        $searchKeyInput.setAttribute('type', 'hidden');
+        $searchKeyInput.setAttribute('name', 'searchKey');
+        $searchKeyInput.setAttribute('value', "GRADE");
+
+        const $searchValueInput = document.createElement('input');
+        $searchValueInput.setAttribute('type', 'hidden');
+        $searchValueInput.setAttribute('name', 'searchValue');
+        $searchValueInput.setAttribute('value', $direct);
+
+        $form.appendChild($searchKeyInput);
+        $form.appendChild($searchValueInput);
+        $body.appendChild($form);
+
+        depart_direct_search.submit();
     })
 })
+
+const $gradeDelectable = document.querySelectorAll('.delectable');
+
+$gradeDelectable.forEach((element) => {
+    element.addEventListener('click', (e) => {
+        const $identifier = e.currentTarget.children[0].dataset['grade'];
+
+        const $gradeDeleteForm = document.createElement('form');
+        $gradeDeleteForm.setAttribute('action', '/grade/delete');
+        $gradeDeleteForm.setAttribute('method', 'POST');
+        $gradeDeleteForm.setAttribute('name', 'grade_delete');
+
+        const $gradeHiddenInput = document.createElement('input');
+        $gradeHiddenInput.setAttribute('name', 'gradeCode');
+        $gradeHiddenInput.setAttribute('value', $identifier);
+
+        $gradeDeleteForm.appendChild($gradeHiddenInput);
+
+        $body.appendChild($gradeDeleteForm);
+
+        grade_delete.submit();
+    })
+})
+
+
+
 
 const $gradeTab = document.querySelectorAll('.grade_tab');
 const $gradeTabItem = document.querySelectorAll('.grade_tab_item');
@@ -34,26 +96,6 @@ $gradeTab.forEach((tabElement, tabIndex) => {
         });
     });
 });
-
-const $body = document.querySelector('body');
-
-function updateEmploy(no) {
-    const $form = document.createElement('form');
-    const $input = document.createElement('input');
-
-    $form.setAttribute('method', 'POST');
-    $form.setAttribute('action', '/employ/update/form');
-
-    $input.setAttribute('type', 'hidden');
-    $input.setAttribute('name', 'no');
-    $input.setAttribute('value', no);
-
-    $form.appendChild($input);
-
-    $body.appendChild($form);
-
-    $form.submit()
-}
 
 const $mergeFromOptions = document.querySelectorAll('#mergeFrom option');
 const $mergeToOptions = document.querySelectorAll('#mergeTo option');

@@ -118,6 +118,36 @@ public class DepartDao {
         return result;
     }
 
+    public int codeDuplication(String departCode) {
+        String sql = "SELECT DEPART_CODE " +
+                "FROM EMP_이승호_DEPART " +
+                "WHERE DEPART_CODE = ?";
+
+        int result = 0;
+
+        JDBConnection jdbc = new JDBConnection();
+
+        try {
+            conn = jdbc.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, departCode);
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+                result = 1;
+            } else {
+                result = 0;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+
     public int nameDuplication(String departName) {
 
         String sql = "SELECT DEPART_NAME " +

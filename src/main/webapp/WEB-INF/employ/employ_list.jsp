@@ -44,8 +44,7 @@
     </c:forEach>
     <c:if test="${not empty errorMessage}">
         <tr class="errorMessage" style="color: red">
-            <td colspan="2" rowspan="2">
-                <p>삭제처리의 오류에 대한 알림</p>
+            <td colspan="5" rowspan="2">
                 <span>${errorMessage}</span>
             </td>
         </tr>
@@ -56,55 +55,27 @@
             <a href="<c:url value="/employ/form"/>">사원등록</a>
         </td>
     </tr>
-    <tr id="search_row">
-        <th>
-            <select name="" id="">
-                <option value="">사원번호</option>
-                <option value="">성명</option>
-                <option value="">직위</option>
-                <option value="">부서</option>
-                <option value="">나이</option>
-            </select>
-        </th>
-        <th colspan="3">
-            <input type="text">
-        </th>
-        <th>
-            <button>검색</button>
-        </th>
-    </tr>
+    <form action="<c:url value="/employ"/>" method="post">
+        <tr id="search_row">
+            <th>
+                <select name="searchKey">
+                    <option value="NO" <c:if test="${searchKey eq 'NO'}">selected</c:if>>사원번호</option>
+                    <option value="NAME" <c:if test="${searchKey eq 'NAME'}">selected</c:if>>성명</option>
+                    <option value="GRADE" <c:if test="${searchKey eq 'GRADE'}">selected</c:if>>직위</option>
+                    <option value="DEPART" <c:if test="${searchKey eq 'DEPART'}">selected</c:if>>부서</option>
+                    <option value="AGE" <c:if test="${searchKey eq 'AGE'}">selected</c:if>>나이</option>
+                </select>
+            </th>
+            <th colspan="3">
+                <input type="text" name="searchValue" <c:if test="${not empty searchValue}">placeholder="${searchValue}"</c:if>>
+            </th>
+            <th>
+                <button type="submit">검색</button>
+            </th>
+        </tr>
+    </form>
     </tbody>
 </table>
-<script>
-
-    const $body = document.querySelector('body');
-
-    const $selectable = document.querySelectorAll('.selectable');
-
-    $selectable.forEach((element) => {
-        element.addEventListener('click', (e) => {
-            const $identfier = e.currentTarget.children[0].textContent;
-            updateEmploy($identfier);
-        })
-    })
-
-    function updateEmploy(no) {
-        const $form = document.createElement('form');
-        const $input = document.createElement('input');
-
-        $form.setAttribute('method', 'POST');
-        $form.setAttribute('action', '/employ/update/form');
-
-        $input.setAttribute('type', 'hidden');
-        $input.setAttribute('name', 'no');
-        $input.setAttribute('value', no);
-
-        $form.appendChild($input);
-
-        $body.appendChild($form);
-
-        $form.submit()
-    }
-</script>
+<script src="<c:url value="/js/employ.js"/>"></script>
 </body>
 </html>

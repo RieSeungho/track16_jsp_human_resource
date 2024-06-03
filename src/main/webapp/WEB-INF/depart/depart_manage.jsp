@@ -32,7 +32,7 @@
     </thead>
     <tbody id="depart_manage_panel">
     <c:forEach var="depart" items="${departList}">
-        <tr>
+        <tr <c:if test="${depart.departPersonnel ne '0'}">class="searchable" data-direct="${depart.departName}"</c:if>>
             <td>${depart.departCode}</td>
             <td>${depart.departName}</td>
             <td>${depart.departPersonnel}명</td>
@@ -51,6 +51,11 @@
         </tr>
         <tr>&nbsp;</tr>
     </c:if>
+    <tr class="anchor_button">
+        <td colspan="3">
+            <a href="<c:url value="/employ"/>">초기화면</a>
+        </td>
+    </tr>
     <tr class="anchor_button">
         <td>
             <a class="depart_tab">부서등록</a>

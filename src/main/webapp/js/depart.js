@@ -13,6 +13,36 @@ function departMerge() {
 
 const $body = document.querySelector('body');
 
+const $searchable = document.querySelectorAll('.searchable');
+
+$searchable.forEach((element) => {
+    element.addEventListener('click', (e) => {
+
+        const $direct = e.currentTarget.dataset['direct'];
+
+        const $form = document.createElement('form');
+        $form.setAttribute('action', '/employ');
+        $form.setAttribute('method', 'POST');
+        $form.setAttribute('name', 'depart_direct_search');
+
+        const $searchKeyInput = document.createElement('input');
+        $searchKeyInput.setAttribute('type', 'hidden');
+        $searchKeyInput.setAttribute('name', 'searchKey');
+        $searchKeyInput.setAttribute('value', "DEPART");
+
+        const $searchValueInput = document.createElement('input');
+        $searchValueInput.setAttribute('type', 'hidden');
+        $searchValueInput.setAttribute('name', 'searchValue');
+        $searchValueInput.setAttribute('value', $direct);
+
+        $form.appendChild($searchKeyInput);
+        $form.appendChild($searchValueInput);
+        $body.appendChild($form);
+
+        depart_direct_search.submit();
+    })
+})
+
 const $departDelectable = document.querySelectorAll('.delectable');
 
 $departDelectable.forEach((element) => {

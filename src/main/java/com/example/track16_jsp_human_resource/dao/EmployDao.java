@@ -92,6 +92,56 @@ public class EmployDao {
         return employDtos;
     }
 
+    public ArrayList<EmployDto> getEmployDtos(String searchKey, String searchValue) {
+
+        if(searchKey.equals("GRADE")) {
+            searchKey = "GR.GRADE_NAME";
+        } else if(searchKey.equals("DEPART")) {
+            searchKey = "DE.DEPART_NAME";
+        }
+
+        String sql = String.format("SELECT EM.NO, EM.NAME, GR.GRADE_NAME AS GRADE, DE.DEPART_NAME AS DEPART, EM.AGE " +
+                "FROM EMP_이승호 EM, EMP_이승호_GRADE GR, EMP_이승호_DEPART DE " +
+                "WHERE EM.GRADE = GR.GRADE_CODE AND EM.DEPART = DE.DEPART_CODE " +
+                "AND %s LIKE ?" +
+                "ORDER BY %s DESC", searchKey, searchKey);
+
+        ArrayList<EmployDto> employDtos = new ArrayList<>();
+
+        JDBConnection jdbc = null;
+
+        String wildCardFormatting = "%" + searchValue + "%";
+
+        try {
+
+            jdbc = new JDBConnection();
+            conn = jdbc.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, wildCardFormatting);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                EmployDto employDto =
+                        new EmployDto(
+                                rs.getString("NO"),
+                                rs.getString("NAME"),
+                                rs.getString("GRADE"),
+                                rs.getString("DEPART"),
+                                rs.getInt("AGE"));
+
+                employDtos.add(employDto);
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            jdbc.close(conn, ps, rs);
+        }
+
+        return employDtos;
+
+    }
+
     public int saveEmploy(EmployDto employDto) {
 
         String sql = "INSERT INTO EMP_이승호 (NO, NAME, GRADE, DEPART, AGE) " +

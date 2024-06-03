@@ -50,7 +50,7 @@ public class DepartNameUpdateController extends HttpServlet {
             return;
         }
 
-        if(employService.nameDuplication(updateName) != 0) {
+        if(employService.departNameDuplication(updateName) != 0) {
             errorMessage = "기존 부서의 명칭과 중복됩니다. 다시 시도해주세요.";
 
             req.setAttribute("errorMessage", errorMessage);

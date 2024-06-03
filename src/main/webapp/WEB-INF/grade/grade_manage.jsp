@@ -33,7 +33,7 @@
     </thead>
     <tbody id="grade_manage_panel">
     <c:forEach var="grade" items="${gradeList}">
-        <tr>
+        <tr <c:if test="${grade.gradePersonnel ne '0'}">class="searchable" data-direct="${grade.gradeName}"</c:if>>
             <td>${grade.gradeCode}</td>
             <td>${grade.gradeName}</td>
             <td>${grade.gradePersonnel}명</td>
@@ -44,6 +44,19 @@
             </tr>
         </c:if>
     </c:forEach>
+    <c:if test="${not empty errorMessage}">
+        <tr class="errorMessage">
+            <td colspan="3" rowspan="2">
+                <span>${errorMessage}</span>
+            </td>
+        </tr>
+        <tr>&nbsp;</tr>
+    </c:if>
+    <tr class="anchor_button">
+        <td colspan="3">
+            <a href="<c:url value="/employ"/>">초기화면</a>
+        </td>
+    </tr>
     <tr class="anchor_button">
         <td>
             <a class="grade_tab">직급등록</a>
@@ -58,7 +71,7 @@
     </tbody>
 </table>
 
-<form class="grade_tab_item" name="grade_insert" action="<c:url value="/employ/form"/>" method="POST">
+<form class="grade_tab_item" name="grade_insert" action="<c:url value="/grade/insert"/>" method="POST">
     <table>
         <tbody>
         <tr>
@@ -80,15 +93,6 @@
                 <input type="text" id="gradeName" name="gradeName">
             </td>
         </tr>
-        <c:if test="${not empty errorMessage}">
-            <tr class="errorMessage">
-                <td colspan="2" rowspan="2">
-                    <p>등록처리의 오류에 대한 알림</p>
-                    <span>${errorMessage}</span>
-                </td>
-            </tr>
-            <tr>&nbsp;</tr>
-        </c:if>
         <tr class="anchor_button">
             <td colspan="2">
                 <a href="javascript:gradeInsert()">직급등록</a>
@@ -98,7 +102,7 @@
     </table>
 </form>
 
-<form class="grade_tab_item" name="grade_insert" action="<c:url value="/employ/form"/>" method="POST">
+<form class="grade_tab_item" name="grade_name_update" action="<c:url value="/grade/update"/>" method="POST">
     <table>
         <tbody>
         <tr>
@@ -106,10 +110,10 @@
         </tr>
         <tr class="input_space">
             <td>
-                <label for="existGrade">기존 직급명칭</label>
+                <label for="existCode">기존 직급명칭</label>
             </td>
             <td>
-                <select name="existGrade" id="existGrade">
+                <select name="existCode" id="existCode">
                     <c:forEach var="grade" items="${gradeList}">
                         <option value="${grade.gradeCode}">${grade.gradeName}</option>
                     </c:forEach>
@@ -118,31 +122,22 @@
         </tr>
         <tr class="input_space">
             <td>
-                <label for="modifyName">변경 직급명칭</label>
+                <label for="updateName">변경 직급명칭</label>
             </td>
             <td>
-                <input type="text" id="modifyName" name="modifyName">
+                <input type="text" id="updateName" name="updateName">
             </td>
         </tr>
-        <c:if test="${not empty errorMessage}">
-            <tr class="errorMessage">
-                <td colspan="2" rowspan="2">
-                    <p>변경처리의 오류에 대한 알림</p>
-                    <span>${errorMessage}</span>
-                </td>
-            </tr>
-            <tr>&nbsp;</tr>
-        </c:if>
         <tr class="anchor_button">
             <td colspan="2">
-                <a href="javascript:gradeUpdate()">명칭변경</a>
+                <a href="javascript:gradeNameUpdate()">명칭변경</a>
             </td>
         </tr>
         </tbody>
     </table>
 </form>
 
-<form class="grade_tab_item" name="grade_merge" action="<c:url value="/employ/form"/>" method="POST">
+<form class="grade_tab_item" name="grade_merge" action="<c:url value="/grade/merge"/>" method="POST">
     <table>
         <tbody>
         <tr>
@@ -154,6 +149,7 @@
             </td>
             <td>
                 <select name="mergeFrom" id="mergeFrom">
+                    <option value="">병합을 실행할 대상을 선택해주세요</option>
                     <c:forEach var="grade" items="${gradeList}">
                         <option value="${grade.gradeCode}">${grade.gradeName}</option>
                     </c:forEach>
@@ -166,21 +162,13 @@
             </td>
             <td>
                 <select name="mergeTo" id="mergeTo">
+                    <option value="">병합을 완료할 목표를 선택해주세요</option>
                     <c:forEach var="grade" items="${gradeList}">
                         <option value="${grade.gradeCode}">${grade.gradeName}</option>
                     </c:forEach>
                 </select>
             </td>
         </tr>
-        <c:if test="${not empty errorMessage}">
-            <tr class="errorMessage">
-                <td colspan="2" rowspan="2">
-                    <p>병합처리의 오류에 대한 알림</p>
-                    <span>${errorMessage}</span>
-                </td>
-            </tr>
-            <tr>&nbsp;</tr>
-        </c:if>
         <tr class="anchor_button">
             <td colspan="2">
                 <a href="javascript:gradeMerge()">직급병합</a>
