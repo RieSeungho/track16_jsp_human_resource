@@ -53,6 +53,7 @@ public class EmployFormController extends HttpServlet {
             req.setAttribute("errorMessage", errorMessage);
 
             req.getRequestDispatcher("/WEB-INF/employ/employ_form.jsp").forward(req, resp);
+            return;
         }
 
         Optional<String> name = Optional.ofNullable(req.getParameter("name"));
@@ -62,8 +63,6 @@ public class EmployFormController extends HttpServlet {
 
         int integerAge = 0;
 
-        int saveResult = 0;
-
         if(name.isPresent() && grade.isPresent() && depart.isPresent() && age.isPresent()) {
 
             req.setAttribute("gradeList", employService.getGradeList());
@@ -72,18 +71,6 @@ public class EmployFormController extends HttpServlet {
             try {
 
                 integerAge = Integer.parseInt(age.get());
-
-                if(integerAge > 70 || integerAge < 19) {
-                    errorMessage = "사원은 19세부터 70세까지 등록할 수 있습니다";
-
-                    req.setAttribute("name", name.get());
-                    req.setAttribute("enteredGrade", grade.get());
-                    req.setAttribute("enteredDepart", depart.get());
-
-                    req.setAttribute("errorMessage", errorMessage);
-
-                    req.getRequestDispatcher("/WEB-INF/employ/employ_form.jsp").forward(req, resp);
-                }
 
             } catch (NumberFormatException e) {
 
@@ -96,13 +83,24 @@ public class EmployFormController extends HttpServlet {
                 req.setAttribute("errorMessage", errorMessage);
 
                 req.getRequestDispatcher("/WEB-INF/employ/employ_form.jsp").forward(req, resp);
+                return;
             }
 
-            if(name.get().matches(KOR_REGEXP) && name.get().getBytes().length < 20) {
 
-                saveResult = employService.saveEmployDto(name.get(), grade.get(), depart.get(), integerAge);
+            if(integerAge < 19 || integerAge > 70) {
+                errorMessage = "사원은 19세부터 70세까지 등록할 수 있습니다";
 
-            } else {
+                req.setAttribute("name", name.get());
+                req.setAttribute("enteredGrade", grade.get());
+                req.setAttribute("enteredDepart", depart.get());
+
+                req.setAttribute("errorMessage", errorMessage);
+
+                req.getRequestDispatcher("/WEB-INF/employ/employ_form.jsp").forward(req, resp);
+                return;
+            }
+
+            if(!name.get().matches(KOR_REGEXP) && name.get().getBytes().length > 20) {
                 errorMessage = "성명은 6자 이내, 한글로 입력해주세요";
 
                 req.setAttribute("enteredGrade", grade.get());
@@ -110,6 +108,8 @@ public class EmployFormController extends HttpServlet {
                 req.setAttribute("age", integerAge);
 
                 req.setAttribute("errorMessage", errorMessage);
+                req.getRequestDispatcher("/WEB-INF/employ/employ_form.jsp").forward(req, resp);
+                return;
             }
 
         } else {
@@ -121,7 +121,10 @@ public class EmployFormController extends HttpServlet {
             req.setAttribute("errorMessage", errorMessage);
 
             req.getRequestDispatcher("/WEB-INF/employ/employ_form.jsp").forward(req, resp);
+            return;
         }
+
+        int saveResult = employService.saveEmployDto(name.get(), grade.get(), depart.get(), integerAge);
 
         if(saveResult == 1) {
             resp.sendRedirect(req.getContextPath() + "/employ");

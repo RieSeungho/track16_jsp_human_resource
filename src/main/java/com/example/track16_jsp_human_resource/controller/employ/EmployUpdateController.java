@@ -53,8 +53,6 @@ public class EmployUpdateController extends HttpServlet {
 
         int integerAge = 0;
 
-        int updateResult = 0;
-
         if(no.isPresent() && name.isPresent() && grade.isPresent() && depart.isPresent() && age.isPresent()) {
 
             req.setAttribute("employMap", employService.getEmployMap(no.get()));
@@ -84,13 +82,7 @@ public class EmployUpdateController extends HttpServlet {
                 return;
             }
 
-            if(name.get().matches(KOR_REGEXP) && name.get().getBytes().length < 20) {
-
-                EmployDto employDto = new EmployDto(no.get(), name.get(), grade.get(), depart.get(), integerAge);
-
-                updateResult = employService.updateEmploy(employDto);
-
-            } else {
+            if(!name.get().matches(KOR_REGEXP) && name.get().getBytes().length > 20) {
                 errorMessage = "성명은 6자 이내, 한글로 입력해주세요";
 
                 req.setAttribute("errorMessage", errorMessage);
@@ -110,6 +102,10 @@ public class EmployUpdateController extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/employ/employ_update.jsp").forward(req, resp);
             return;
         }
+
+        EmployDto employDto = new EmployDto(no.get(), name.get(), grade.get(), depart.get(), integerAge);
+
+        int updateResult = employService.updateEmploy(employDto);
 
         if(updateResult == 1) {
             resp.sendRedirect(req.getContextPath() + "/employ");

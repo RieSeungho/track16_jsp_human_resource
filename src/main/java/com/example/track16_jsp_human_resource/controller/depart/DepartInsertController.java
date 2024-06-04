@@ -38,7 +38,7 @@ public class DepartInsertController extends HttpServlet {
         String departCode = req.getParameter("departCode");
         String departName = req.getParameter("departName");
 
-        if(departCode.length() > 3){
+        if(departCode.getBytes().length > 3){
             errorMessage = "등록할 부서의 코드는 영문과 숫자로 3자리 이하로 입력해주세요";
 
             req.setAttribute("errorMessage", errorMessage);
@@ -51,12 +51,12 @@ public class DepartInsertController extends HttpServlet {
             errorMessage = "등록할 부서의 명칭은 한글 6자, 영문으로 20이하로 입력해주세요";
 
             req.setAttribute("errorMessage", errorMessage);
-            req.setAttribute("departList", employService.getDepartList());
+            req.setAttribute("de    partList", employService.getDepartList());
             req.getRequestDispatcher("/WEB-INF/depart/depart_manage.jsp").forward(req, resp);
             return;
         }
 
-        if(employService.departDuplicationCheck(departCode, departName)) {
+        if(!employService.departDuplicationCheck(departCode, departName)) {
             errorMessage = "부서의 코드 또는 명칭이 중복되었습니다. 다시 시도해주세요";
 
             req.setAttribute("errorMessage", errorMessage);

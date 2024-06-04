@@ -114,7 +114,7 @@ public class EmployService {
 
         boolean result = false;
 
-        if(departDao.codeDuplication(departCode) == 0 || departDao.nameDuplication(departName) == 0) {
+        if(departDao.codeDuplication(departCode) == 0 && departDao.nameDuplication(departName) == 0) {
             result = true;
         }
 
@@ -149,7 +149,7 @@ public class EmployService {
 
         boolean result = false;
 
-        if(gradeDao.codeDuplication(gradeCode) == 0 || gradeDao.nameDuplication(gradeName) == 0) {
+        if(gradeDao.codeDuplication(gradeCode) == 0 && gradeDao.nameDuplication(gradeName) == 0) {
             result = true;
         }
 

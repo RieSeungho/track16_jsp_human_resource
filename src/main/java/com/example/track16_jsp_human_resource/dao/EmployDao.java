@@ -211,9 +211,7 @@ public class EmployDao {
 
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         } finally {
             jdbc.close(conn, ps, rs);

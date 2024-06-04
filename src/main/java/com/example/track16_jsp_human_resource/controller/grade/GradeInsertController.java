@@ -37,7 +37,7 @@ public class GradeInsertController extends HttpServlet {
         String gradeCode = req.getParameter("gradeCode");
         String gradeName = req.getParameter("gradeName");
 
-        if(gradeCode.length() > 3){
+        if(gradeCode.getBytes().length > 3){
             errorMessage = "등록할 직급의 코드는 영문과 숫자로 3자리 이하로 입력해주세요";
 
             req.setAttribute("errorMessage", errorMessage);
@@ -55,7 +55,7 @@ public class GradeInsertController extends HttpServlet {
             return;
         }
 
-        if(employService.gradeDuplicationCheck(gradeCode, gradeName)) {
+        if(!employService.gradeDuplicationCheck(gradeCode, gradeName)) {
             errorMessage = "직급의 코드 또는 명칭이 중복되었습니다. 다시 시도해주세요";
 
             req.setAttribute("errorMessage", errorMessage);
@@ -67,7 +67,7 @@ public class GradeInsertController extends HttpServlet {
         int result = employService.saveGrade(gradeCode, gradeName);
 
         if(result == 1){
-            resp.sendRedirect(req.getContextPath() + "/depart");
+            resp.sendRedirect(req.getContextPath() + "/grade");
         } else {
 
             req.setAttribute("errorMessage", errorMessage);
